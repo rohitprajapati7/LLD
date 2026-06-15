@@ -1,0 +1,440 @@
+# OOP + SOLID Interview Revision Notes (JavaScript/Node.js)
+
+## What is OOP?
+
+OOP (Object Oriented Programming) is a programming paradigm that organizes code into objects containing:
+
+* State (Properties)
+* Behavior (Methods)
+
+Benefits:
+
+* Reusability
+* Maintainability
+* Scalability
+* Modularity
+
+---
+
+# Class vs Object
+
+## Class
+
+Blueprint for creating objects.
+
+```js
+class User {}
+```
+
+## Object
+
+Instance of a class.
+
+```js
+const user = new User();
+```
+
+Interview Answer:
+
+* Class = Blueprint
+* Object = Actual instance
+
+Example:
+
+* User = Class
+* Rohit = Object
+
+---
+
+# Encapsulation
+
+Definition:
+Hide internal data and expose controlled methods.
+
+Example:
+
+```js
+class BankAccount {
+  #balance = 0;
+
+  deposit(amount) {
+    this.#balance += amount;
+  }
+
+  getBalance() {
+    return this.#balance;
+  }
+}
+```
+
+Real World:
+ATM hides bank database.
+
+Purpose:
+
+* Security
+* Data integrity
+* Controlled access
+
+Interview One-Liner:
+"Encapsulation hides data and exposes controlled operations."
+
+---
+
+# Abstraction
+
+Definition:
+Hide complexity and expose simple interface.
+
+Example:
+
+```js
+payment.pay();
+```
+
+Instead of:
+
+```js
+validate();
+audit();
+createTransaction();
+callGateway();
+```
+
+Real World:
+Driving a car without knowing engine internals.
+
+Purpose:
+
+* Simpler APIs
+* Reduced complexity
+
+Interview One-Liner:
+"Abstraction hides implementation complexity."
+
+---
+
+# Encapsulation vs Abstraction
+
+Encapsulation:
+
+* Hides data
+* Focus = Protection
+
+Abstraction:
+
+* Hides complexity
+* Focus = Simplicity
+
+Example:
+ATM PIN → Encapsulation
+ATM Working → Abstraction
+
+---
+
+# Inheritance
+
+Definition:
+Acquire properties and methods from parent class.
+
+Example:
+
+```js
+class User {
+  login() {}
+}
+
+class Admin extends User {
+  deleteUser() {}
+}
+```
+
+Use When:
+IS-A relationship exists.
+
+Example:
+
+* Admin IS-A User
+* Customer IS-A User
+
+Avoid When:
+
+* No true IS-A relationship
+
+Interview One-Liner:
+"Inheritance promotes code reuse through parent-child relationships."
+
+---
+
+# Polymorphism
+
+Definition:
+Same interface, different behavior.
+
+Example:
+
+```js
+class Payment {
+  pay() {}
+}
+
+class UPI extends Payment {
+  pay() {
+    console.log("UPI");
+  }
+}
+
+class Card extends Payment {
+  pay() {
+    console.log("CARD");
+  }
+}
+```
+
+Usage:
+
+```js
+payment.pay();
+```
+
+Benefits:
+
+* Removes if/else chains
+* Easier extensibility
+
+Interview One-Liner:
+"Polymorphism allows the same method call to behave differently depending on the object."
+
+---
+
+# Composition vs Inheritance
+
+Inheritance:
+IS-A
+
+```js
+class Admin extends User {}
+```
+
+Composition:
+HAS-A
+
+```js
+class Car {
+  constructor() {
+    this.engine = new Engine();
+  }
+}
+```
+
+Rule:
+
+Use Inheritance:
+
+* IS-A relationship
+
+Use Composition:
+
+* HAS-A relationship
+
+Interview Answer:
+"Prefer composition over inheritance because it creates loosely coupled and flexible systems."
+
+---
+
+# SOLID Principles
+
+OOP = Building Blocks
+
+SOLID = Rules for using those blocks correctly
+
+---
+
+# S - Single Responsibility Principle
+
+Definition:
+A class should have only one reason to change.
+
+Bad:
+
+```js
+class UserService {
+  createUser(){}
+  sendEmail(){}
+  generateReport(){}
+}
+```
+
+Good:
+
+```js
+UserService
+EmailService
+ReportService
+```
+
+Interview Answer:
+"A class should have a single responsibility."
+
+Question:
+How many reasons can this class change?
+
+---
+
+# O - Open Closed Principle
+
+Definition:
+Open for extension, closed for modification.
+
+Bad:
+
+```js
+if(type === "UPI") {}
+else if(type === "CARD") {}
+```
+
+Good:
+
+```js
+class Payment {
+  pay(){}
+}
+
+class UPI extends Payment {}
+class Card extends Payment {}
+```
+
+Interview Answer:
+"New behavior should be added by extending code, not modifying existing code."
+
+Question:
+Can I add a feature without changing existing code?
+
+---
+
+# L - Liskov Substitution Principle
+
+Definition:
+Child class should replace parent class safely.
+
+Bad:
+
+```js
+class Bird {
+  fly(){}
+}
+
+class Penguin extends Bird {
+  fly(){
+    throw Error();
+  }
+}
+```
+
+Interview Answer:
+"Objects of subclasses should be replaceable with objects of parent classes."
+
+Question:
+Can child fully behave like parent?
+
+---
+
+# I - Interface Segregation Principle
+
+Definition:
+Do not force clients to depend on methods they don't use.
+
+Bad:
+
+```js
+class Worker {
+  work(){}
+  fly(){}
+}
+```
+
+Good:
+
+```js
+Workable
+Flyable
+```
+
+Interview Answer:
+"Keep interfaces small and focused."
+
+Question:
+Am I forcing unnecessary methods?
+
+---
+
+# D - Dependency Inversion Principle
+
+Definition:
+Depend on abstractions, not concrete implementations.
+
+Bad:
+
+```js
+class OrderService {
+  constructor() {
+    this.payment = new Razorpay();
+  }
+}
+```
+
+Good:
+
+```js
+class OrderService {
+  constructor(paymentProvider) {
+    this.paymentProvider = paymentProvider;
+  }
+}
+```
+
+Interview Answer:
+"High-level modules should depend on abstractions rather than concrete implementations."
+
+Question:
+Can I swap implementations without changing business logic?
+
+---
+
+# Most Important Interview Answers
+
+What is OOP?
+→ Organizing software around objects containing state and behavior.
+
+Why OOP?
+→ Reusability, maintainability, scalability.
+
+Difference between Class and Object?
+→ Class = Blueprint, Object = Instance.
+
+Difference between Encapsulation and Abstraction?
+→ Encapsulation hides data, Abstraction hides complexity.
+
+Difference between Inheritance and Composition?
+→ Inheritance = IS-A, Composition = HAS-A.
+
+Why Composition over Inheritance?
+→ Less coupling, better flexibility, easier testing.
+
+What is Polymorphism?
+→ Same interface, different implementations.
+
+What are SOLID Principles?
+→ Five design principles that improve maintainability, extensibility, and scalability of object-oriented software.
+
+---
+
+# Senior Interview Golden Rules
+
+1. Prefer Composition over Inheritance.
+2. Depend on Abstractions.
+3. Avoid Large Classes.
+4. Avoid Long if/else Chains.
+5. Use Polymorphism for Extensibility.
+6. Follow SOLID before Design Patterns.
+7. Write Code That Is Easy To Change.
